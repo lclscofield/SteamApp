@@ -1,5 +1,6 @@
 {
     "usingComponents": {
-        "mp-tabs": "../../components/tabs/index"
+        "mp-tabs": "../../components/tabs/index",
+        "scroll-list": "../../components/scroll-list/index"
     }
 }

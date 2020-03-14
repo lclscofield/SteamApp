@@ -1,0 +1,25 @@
+<!-- 这是自定义组件的内部WXML结构 -->
+<scroll-view class="tab-content" scroll-y="{{true}}">
+    <view class="game-card" hover-class="hover-class" wx:for="{{gameList}}" wx:for-item="game" wx:for-index="gameIdx" wx:key="gid">
+        <!-- left -->
+        <view class="game-left">
+            <image class="game-img-min" lazy-load="true" src="{{ game.imgMin }}"></image>
+            <!-- left-bottom -->
+            <view class="game-left-btm">
+                <view class="game-released">{{ game.released }}</view>
+                <image class="game-review" mode="aspectFill" src="{{ game.reviewImg }}"></image>
+            </view>
+        </view>
+        <!-- right -->
+        <view class="game-right">
+            <view class="game-title">{{ game.title }}</view>
+            <view class="game-right-btm">
+                <view class="game-discount" wx:if="{{ game.discount }}">-{{ game.discount }}%</view>
+                <view class="game-price-wrap">
+                    <view class="game-price">¥{{ game.price }}</view>
+                    <view class="game-strike">¥{{ game.strike }}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</scroll-view>

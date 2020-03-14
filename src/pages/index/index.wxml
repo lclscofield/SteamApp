@@ -1,8 +1,8 @@
 <!-- index.wxml -->
 <view class="container">
-    <mp-tabs tabs="{{tabs}}" activeTab="{{activeTab}}" swiperClass="weui-tabs-swiper" bindtabclick="onTabCLick" bindchange="onChange" activeClass="tab-bar-title__selected">
-        <block wx:for="{{tabs}}" wx:key="title">
-            <view class="tab-content" slot="tab-content-{{index}}">{{item.title}}</view>
+    <mp-tabs tabs="{{tabs}}" activeTab="{{activeTab}}" tabClass="weui-tab-bar" swiperClass="weui-tabs-swiper" tabUnderlineColor="#1b3b51" tabActiveTextColor="#1b3b51" tabInactiveTextColor="#1b3b51" bindtabclick="onTabCLick" bindchange="onChange">
+        <block wx:for="{{tabs}}" wx:key="type">
+            <scroll-list gameList="{{ item.list }}" slot="tab-content-{{index}}"></scroll-list>
         </block>
     </mp-tabs>
 </view>
