@@ -2,12 +2,13 @@
 const app = getApp()
 
 const exp = {
-    imgMin: 'https://media.st.dl.eccdnx.com/steam/apps/359550/header.jpg',
+    imgHeaderUrl: 'https://media.st.dl.eccdnx.com/steam/apps/359550/header.jpg',
     title: "Tom Clancy's Rainbow Six® Siege",
     url: 'https://store.steampowered.com/app/359550/Tom_Clancys_Rainbow_Six_Siege/',
     gId: '359550',
     released: '2015年12月1日',
-    reviewImg: 'positive',
+    review: 'positive',
+    sys: ['win', 'mac', 'linux'],
     discount: 60,
     price: 88,
     strike: 35

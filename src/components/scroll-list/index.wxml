@@ -1,23 +1,31 @@
 <!-- 这是自定义组件的内部WXML结构 -->
 <scroll-view class="tab-content" scroll-y="{{true}}">
-    <view class="game-card" hover-class="hover-class" wx:for="{{gameList}}" wx:for-item="game" wx:for-index="gameIdx" wx:key="gid">
+    <view class="game-card" hover-class="hover-class" hover-start-time="100" wx:for="{{gameList}}" wx:for-item="game" wx:for-index="gameIdx" wx:key="gid">
         <!-- left -->
-        <view class="game-left">
-            <image class="game-img-min" lazy-load="true" src="{{ game.imgMin }}"></image>
-            <!-- left-bottom -->
-            <view class="game-left-btm">
-                <view class="game-released">{{ game.released }}</view>
-                <image class="game-review" mode="aspectFill" src="{{ game.reviewImg }}"></image>
-            </view>
-        </view>
+        <image class="game-left game-img" lazy-load="true" src="{{ game.imgHeaderUrl }}"></image>
+        <!-- left-bottom -->
+        <!-- <view class="game-left-btm">
+            <view class="game-released">{{ game.released }}</view>
+            <image class="game-review" src="{{ `https://store.steampowered.com/public/images/v6/user_reviews_${game.reviewImg}.png` }}"></image>
+        </view> -->
         <!-- right -->
         <view class="game-right">
-            <view class="game-title">{{ game.title }}</view>
-            <view class="game-right-btm">
-                <view class="game-discount" wx:if="{{ game.discount }}">-{{ game.discount }}%</view>
-                <view class="game-price-wrap">
-                    <view class="game-price">¥{{ game.price }}</view>
-                    <view class="game-strike">¥{{ game.strike }}</view>
+            <view class="game-title ~ellipsis">{{ game.title }}</view>
+            <view class="game-right-btm-wrap">
+                <view class="game-sys">
+                    <image class="game-sys-img" wx:for="{{ game.sys }}" wx:for-item="sys" wx:key="sys" src="{{ 'https://store.steampowered.com/public/images/v6/icon_platform_' + sys + '.png' }}"></image>
+                </view>
+                <view class="game-right-btm">
+                    <view class="game-discount" wx:if="{{ game.discount }}">
+                        -{{ game.discount }}%
+                    </view>
+                    <view class="game-price-wrap">
+                        <view class="game-price" wx:if="{{ game.price }}">¥{{ game.price }}</view>
+                        <view class="game-strike" wx:if="{{ game.strike }}">
+                            ¥{{ game.strike }}
+                        </view>
+                        <view class="game-strike" wx:else>免费</view>
+                    </view>
                 </view>
             </view>
         </view>
