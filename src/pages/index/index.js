@@ -32,15 +32,26 @@ const list = [
 Page({
     data: {
         tabs: [],
-        activeTab: 0
+        activeTab: 0,
+        page: 1,
+        limit: 25
     },
 
-    onLoad() {
+    async onLoad() {
+        const { page, limit } = this.data
+        const db = wx.cloud.database()
+        const res = await db
+            .collection('gameListAll')
+            .skip(10 * (page - 1)) // 跳过结果集中的前 10 条，从第 11 条开始返回
+            .limit(limit) // 限制返回数量为 10 条
+            .get()
+        console.log(res)
+
         const tabs = list.map(item => {
             return {
                 title: item.title,
                 type: item.type,
-                list: Array(100).fill(exp)
+                list: res.data
             }
         })
         this.setData({ tabs })
@@ -54,5 +65,9 @@ Page({
     onChange(e) {
         const index = e.detail.index
         this.setData({ activeTab: index })
+    },
+
+    onUpdateGameList (e) {
+        console.log(222, e)
     }
 })
