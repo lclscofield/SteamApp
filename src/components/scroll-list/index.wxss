@@ -102,5 +102,9 @@
 .game-strike {
     display: inline-block;
     margin-left: 20rpx;
+}
+
+.game-strike.active {
     font-size: 32rpx;
+    color: #1aa36f;
 }

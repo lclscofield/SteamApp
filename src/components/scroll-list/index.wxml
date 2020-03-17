@@ -1,5 +1,5 @@
 <!-- 这是自定义组件的内部WXML结构 -->
-<scroll-view class="tab-content" enable-back-to-top="{{true}}" scroll-y="{{true}}" lower-threshold="200" bindscrolltolower="updateGameList">
+<scroll-view class="tab-content" enable-back-to-top="{{true}}" scroll-y="{{true}}" lower-threshold="100" bindscrolltolower="updateGameList">
     <view class="game-card" hover-class="hover-class" hover-start-time="100" wx:for="{{gameList}}" wx:for-item="game" wx:for-index="gameIdx" wx:key="gid">
         <!-- left -->
         <image class="game-left game-img" lazy-load="true" src="{{ game.imgHeaderUrl }}"></image>
@@ -20,8 +20,8 @@
                         -{{ game.discount }}%
                     </view>
                     <view class="game-price-wrap">
-                        <view class="game-price" wx:if="{{ game.price }}">¥{{ game.price }}</view>
-                        <view class="game-strike" wx:if="{{ game.strike }}">
+                        <view class="game-price" wx:if="{{ game.price && (game.price !== game.strike) }}">¥{{ game.price }}</view>
+                        <view class="game-strike {{ game.price !== game.strike ? 'active' : '' }}" wx:if="{{ game.strike }}">
                             ¥{{ game.strike }}
                         </view>
                         <view class="game-strike" wx:else>免费</view>

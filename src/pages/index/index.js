@@ -1,4 +1,5 @@
 //index.js
+const db = require('../../db/index')
 const app = getApp()
 
 const exp = {
@@ -31,43 +32,52 @@ const list = [
 
 Page({
     data: {
-        tabs: [],
-        activeTab: 0,
-        page: 1,
-        limit: 25
+        tabs: [], // 总数据
+        activeTab: 0, // 当前 tab
     },
 
     async onLoad() {
-        const { page, limit } = this.data
-        const db = wx.cloud.database()
-        const res = await db
-            .collection('gameListAll')
-            .skip(10 * (page - 1)) // 跳过结果集中的前 10 条，从第 11 条开始返回
-            .limit(limit) // 限制返回数量为 10 条
-            .get()
-        console.log(res)
-
+        // 初始化
         const tabs = list.map(item => {
             return {
                 title: item.title,
                 type: item.type,
-                list: res.data
+                page: 1,
+                list: []
             }
         })
         this.setData({ tabs })
+
+        this.onUpdateGameList()
     },
 
     onTabCLick(e) {
-        const index = e.detail.index
-        this.setData({ activeTab: index })
+        this.setActiveTab(e.detail.index)
     },
 
     onChange(e) {
-        const index = e.detail.index
-        this.setData({ activeTab: index })
+        this.setActiveTab(e.detail.index)
     },
 
-    onUpdateGameList (e) {
-        console.log(222, e)
+    // 设置激活的 tab
+    setActiveTab (idx) {
+        this.setData({ activeTab: idx })
+    },
+
+    // 更新数据
+    async onUpdateGameList() {
+        const { tabs, activeTab } = this.data
+        const { type, page, list} = tabs[activeTab]
+
+        let res = null
+        if (type === 'discount') {
+            res = await db.fetchGameListDiscount(page)
+        }
+        const updateList = `tabs[${activeTab}].list`
+        const updatePage = `tabs[${activeTab}].page`
+        this.setData({
+            [updateList]: list.concat(res),
+            [updatePage]: page + 1
+        })
     }
 })

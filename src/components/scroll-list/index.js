@@ -15,7 +15,7 @@ Component({
 
     methods: {
         updateGameList() {
-            this.triggerEvent('myevent', myEventDetail, myEventOption)
+            this.triggerEvent('update')
         }
     }
 })
