@@ -33,7 +33,7 @@ const list = [
 Page({
     data: {
         tabs: [], // 总数据
-        activeTab: 0, // 当前 tab
+        activeTab: 0 // 当前 tab
     },
 
     async onLoad() {
@@ -42,7 +42,7 @@ Page({
             return {
                 title: item.title,
                 type: item.type,
-                page: 1,
+                page: 0,
                 list: []
             }
         })
@@ -60,23 +60,23 @@ Page({
     },
 
     // 设置激活的 tab
-    setActiveTab (idx) {
+    setActiveTab(idx) {
         this.setData({ activeTab: idx })
     },
 
     // 更新数据
     async onUpdateGameList() {
         const { tabs, activeTab } = this.data
-        const { type, page, list} = tabs[activeTab]
+        const { type, page, list } = tabs[activeTab]
 
         let res = null
         if (type === 'discount') {
-            res = await db.fetchGameListDiscount(page)
+            res = await db.fetchGameListDiscount(page + 1)
         }
-        const updateList = `tabs[${activeTab}].list`
+        const updateList = `tabs[${activeTab}].list[${page}]`
         const updatePage = `tabs[${activeTab}].page`
         this.setData({
-            [updateList]: list.concat(res),
+            [updateList]: res,
             [updatePage]: page + 1
         })
     }

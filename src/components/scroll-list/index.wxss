@@ -6,6 +6,11 @@
     box-sizing: border-box;
 }
 
+.game-card-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
 .game-card {
     margin-bottom: 20rpx;
     display: flex;
