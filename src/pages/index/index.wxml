@@ -2,7 +2,7 @@
 <view class="container">
     <mp-tabs tabs="{{tabs}}" activeTab="{{activeTab}}" tabClass="weui-tab-bar" swiperClass="weui-tabs-swiper" tabUnderlineColor="#1b3b51" tabActiveTextColor="#1b3b51" tabInactiveTextColor="#1b3b51" bindtabclick="onTabCLick" bindchange="onChange">
         <block wx:for="{{tabs}}" wx:key="type">
-            <scroll-list gameListWrap="{{ item.list }}" slot="tab-content-{{index}}" bindupdate="onUpdateGameList"></scroll-list>
+            <scroll-list gameListWrap="{{ gameListData }}" tabIdx="{{ index }}" test="{{test}}" slot="tab-content-{{index}}" bindupdate="onUpdateGameList"></scroll-list>
         </block>
     </mp-tabs>
 </view>

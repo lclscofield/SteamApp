@@ -32,8 +32,10 @@ const list = [
 
 Page({
     data: {
-        tabs: [], // 总数据
-        activeTab: 0 // 当前 tab
+        tabs: [], // tab 数据
+        activeTab: 0, // 当前 tab
+        pages: [0, 0, 0],
+        gameListData: [] // 列表数据
     },
 
     async onLoad() {
@@ -42,7 +44,6 @@ Page({
             return {
                 title: item.title,
                 type: item.type,
-                page: 0,
                 list: []
             }
         })
@@ -66,15 +67,25 @@ Page({
 
     // 更新数据
     async onUpdateGameList() {
-        const { tabs, activeTab } = this.data
-        const { type, page, list } = tabs[activeTab]
+        // const { test } = this.data
+        // const testList = []
+        // for (let i = 0; i < 20; i++) {
+        //     testList.push(123)
+        // }
+        // const testListStr = `test[${test.length}]`
+        // this.setData({
+        //     [testListStr]: testList
+        // })
+        const { tabs, activeTab, gameListData, pages } = this.data
+        const { type } = tabs[activeTab]
+        const page = pages[activeTab]
 
         let res = null
         if (type === 'discount') {
             res = await db.fetchGameListDiscount(page + 1)
         }
-        const updateList = `tabs[${activeTab}].list[${page}]`
-        const updatePage = `tabs[${activeTab}].page`
+        const updateList = `gameListData[${activeTab}][${page}]`
+        const updatePage = `pages[${activeTab}]`
         this.setData({
             [updateList]: res,
             [updatePage]: page + 1

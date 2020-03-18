@@ -6,17 +6,16 @@ Component({
             type: Array,
             value: []
         },
-        page: {
-            // 页数
+        tabIdx: {
             type: Number,
-            value: 1
+            value: 0
         }
     },
 
     lifetimes: {
-        attached: function() {
+        ready: function() {
             // 在组件实例进入页面节点树时执行
-            console.log(this.data.gameListWrap)
+            console.log(this.data)
         }
     },
 

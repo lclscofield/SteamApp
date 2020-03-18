@@ -1,21 +1,24 @@
 .tab-content {
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
     box-sizing: border-box;
 }
 
-.game-card-wrap {
-    display: flex;
-    flex-direction: column;
+/* game 透明显示 */
+@keyframes opacity {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .game-card {
     margin-bottom: 20rpx;
     display: flex;
     color: #1b3b51;
-    animation: game 0.3s linear;
     background-color: #fff;
 }
 
@@ -24,13 +27,10 @@
     background: #d3d5d7;
 }
 
-/* .game-left {
-    padding-right: 20rpx;
-} */
-
 .game-img {
     width: 360rpx;
     height: 180rpx;
+    animation: opacity 0.2s linear;
 }
 
 /* .game-left-btm {
