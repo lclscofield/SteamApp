@@ -35,7 +35,8 @@ Page({
         tabs: [], // tab 数据
         activeTab: 0, // 当前 tab
         pages: [0, 0, 0],
-        gameListData: [] // 列表数据
+        gameListData: [], // 列表数据
+        showEndList: [false, false, false]
     },
 
     async onLoad() {
@@ -62,33 +63,42 @@ Page({
 
     // 设置激活的 tab
     setActiveTab(idx) {
+        const { pages } = this.data
+        const page = pages[idx]
+
         this.setData({ activeTab: idx })
+        if (page === 0) {
+            this.onUpdateGameList()
+        }
     },
 
     // 更新数据
     async onUpdateGameList() {
-        // const { test } = this.data
-        // const testList = []
-        // for (let i = 0; i < 20; i++) {
-        //     testList.push(123)
-        // }
-        // const testListStr = `test[${test.length}]`
-        // this.setData({
-        //     [testListStr]: testList
-        // })
-        const { tabs, activeTab, gameListData, pages } = this.data
+        const { tabs, activeTab, pages, showEndList } = this.data
         const { type } = tabs[activeTab]
         const page = pages[activeTab]
+        const showEnd = showEndList[activeTab]
+
+        // 无数据后不再拉接口
+        if (showEnd) return
 
         let res = null
-        if (type === 'discount') {
+        // if (type === 'discount') {
             res = await db.fetchGameListDiscount(page + 1)
+        // }
+        if (res) {
+            if (res.length < 20) { // 判断数据是否加载完
+                const showEndListStr = `showEndList[${activeTab}]`
+                this.setData({
+                    [showEndListStr]: true
+                })
+            }
         }
-        const updateList = `gameListData[${activeTab}][${page}]`
-        const updatePage = `pages[${activeTab}]`
+        const updateListStr = `gameListData[${activeTab}][${page}]`
+        const updatePageStr = `pages[${activeTab}]`
         this.setData({
-            [updateList]: res,
-            [updatePage]: page + 1
+            [updateListStr]: res,
+            [updatePageStr]: page + 1
         })
     }
 })

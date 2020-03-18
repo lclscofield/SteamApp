@@ -1,4 +1,7 @@
 Component({
+    options: {
+        styleIsolation: 'apply-shared' // 样式隔离选项
+    },
     // 这里定义了组件属性，属性值可以在组件使用时指定
     properties: {
         gameListWrap: {
@@ -6,14 +9,30 @@ Component({
             type: Array,
             value: []
         },
-        tabIdx: {
+        page: {
             type: Number,
             value: 0
+        },
+        showEnd: {
+            type: Boolean,
+            value: false
+        }
+    },
+
+    data: {
+        showLoading: false
+    },
+
+    observers: {
+        page: function() {
+            this.setData({
+                showLoading: false
+            })
         }
     },
 
     lifetimes: {
-        ready: function() {
+        ready() {
             // 在组件实例进入页面节点树时执行
             console.log(this.data)
         }
@@ -21,6 +40,11 @@ Component({
 
     methods: {
         updateGameList() {
+            if (this.data.page > 0) {
+                this.setData({
+                    showLoading: true
+                })
+            }
             this.triggerEvent('update')
         }
     }

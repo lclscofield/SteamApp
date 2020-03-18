@@ -1,6 +1,6 @@
 <!-- 这是自定义组件的内部WXML结构 -->
-<scroll-view class="tab-content" enable-flex="{{true}}" scroll-with-animation="{{true}}" enable-back-to-top="{{true}}" scroll-y="{{true}}" scroll-anchoring="{{true}}" lower-threshold="200" bindscrolltolower="updateGameList">
-    <view class="game-card-wrap" wx:for="{{gameListWrap[tabIdx]}}" wx:for-item="gameList" wx:for-index="gameListIdx" wx:key="gameListIdx">
+<scroll-view class="tab-content" enable-flex="{{true}}" scroll-with-animation="{{true}}" enable-back-to-top="{{true}}" scroll-y="{{true}}" scroll-anchoring="{{true}}" lower-threshold="300" bindscrolltolower="updateGameList">
+    <view class="game-card-wrap" wx:for="{{gameListWrap}}" wx:for-item="gameList" wx:for-index="gameListIdx" wx:key="gameListIdx">
         <view class="game-card" hover-class="hover-class" hover-start-time="100" wx:for="{{gameList}}" wx:for-item="game" wx:for-index="gameIdx" wx:key="gid">
             <!-- left -->
             <image class="game-left game-img" lazy-load="true" src="{{ game.imgHeaderUrl }}"></image>
@@ -33,5 +33,9 @@
                 </view>
             </view>
         </view>
+    </view>
+    <mp-loading duration="{{350}}" ext-class="list-loading" type="dot-gray" show="{{ showLoading }}"></mp-loading>
+    <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot" wx:if="{{showEnd}}">
+        <text class="weui-loadmore__tips"></text>
     </view>
 </scroll-view>

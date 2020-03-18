@@ -15,6 +15,10 @@
     }
 }
 
+.weui-loadmore_line .weui-loadmore__tips {
+    background-color: #eee;
+}
+
 .game-card {
     margin-bottom: 20rpx;
     display: flex;

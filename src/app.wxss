@@ -1,5 +1,5 @@
 /**app.wxss**/
-@import './miniprogram_npm/weui-miniprogram/weui-wxss/dist/style/weui.wxss';
+@import './style/weui.wxss';
 
 page {
     font-size: 28rpx;
@@ -12,4 +12,9 @@ page {
     /* 隐藏溢出部分 */
     text-overflow: ellipsis;
     /* 显示省略符号来代表被隐藏的文本 */
+}
+
+.list-loading {
+    width: 100%;
+    height: 80rpx;
 }
