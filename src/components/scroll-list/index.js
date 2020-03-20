@@ -40,7 +40,10 @@ Component({
 
     methods: {
         updateGameList() {
-            if (this.data.page > 0) {
+            const { page, showEnd } = this.data
+            if (showEnd) return
+
+            if (page > 0) {
                 this.setData({
                     showLoading: true
                 })

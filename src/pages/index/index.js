@@ -17,15 +17,15 @@ const exp = {
 
 const list = [
     {
-        title: '实时优惠',
+        title: '最新折扣',
         type: 'discount'
     },
     {
-        title: '最热游戏',
+        title: '热门游戏',
         type: 'hot'
     },
     {
-        title: '热门新品',
+        title: '近期新品',
         type: 'new'
     }
 ]
@@ -34,21 +34,27 @@ Page({
     data: {
         tabs: [], // tab 数据
         activeTab: 0, // 当前 tab
-        pages: [0, 0, 0],
-        gameListData: [], // 列表数据
-        showEndList: [false, false, false]
+        pages: [], // 各 tab 的页码
+        showEndList: [], // 控制 tab 是否加载完毕
+        gameListData: [] // 列表数据
     },
 
     async onLoad() {
         // 初始化
-        const tabs = list.map(item => {
-            return {
+        const tabs = [],
+            pages = [],
+            showEndList = [],
+            gameListData = []
+        list.forEach(item => {
+            pages.push(0)
+            showEndList.push(false)
+            tabs.push({
                 title: item.title,
-                type: item.type,
-                list: []
-            }
+                type: item.type
+            })
+            gameListData.push([])
         })
-        this.setData({ tabs })
+        this.setData({ tabs, pages, showEndList, gameListData })
 
         this.onUpdateGameList()
     },
@@ -83,11 +89,13 @@ Page({
         if (showEnd) return
 
         let res = null
-        // if (type === 'discount') {
-            res = await db.fetchGameListDiscount(page + 1)
-        // }
+        // 根据当前类型获取对应数据
+        console.log(type, page + 1)
+        res = await db.fetchGameListDiscount(type, page + 1)
+
         if (res) {
-            if (res.length < 20) { // 判断数据是否加载完
+            if (res.length < 20) {
+                // 判断数据是否加载完
                 const showEndListStr = `showEndList[${activeTab}]`
                 this.setData({
                     [showEndListStr]: true
