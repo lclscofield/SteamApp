@@ -1,6 +1,7 @@
 {
     "pages": [
-        "pages/index/index"
+        "pages/index/index",
+        "pages/user/index"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -10,5 +11,25 @@
         "navigationBarTextStyle": "white"
     },
     "sitemapLocation": "sitemap.json",
-    "style": "v2"
+    "style": "v2",
+    "tabBar": {
+        "color": "#888888",
+        "selectedColor": "#1b3b51",
+        "backgroundColor": "#F6F6F6",
+        "borderStyle": "white",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "折扣",
+                "iconPath": "imgs/steam.png",
+                "selectedIconPath": "imgs/steam-active.png"
+            },
+            {
+                "pagePath": "pages/user/index",
+                "text": "我的",
+                "iconPath": "imgs/user.png",
+                "selectedIconPath": "imgs/user-active.png"
+            }
+        ]
+    }
 }

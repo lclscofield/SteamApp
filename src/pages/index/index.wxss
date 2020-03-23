@@ -1,6 +1,5 @@
 /**index.wxss**/
 page {
-    background-color: #eee;
     height: 100%;
 }
 

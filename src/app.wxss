@@ -3,6 +3,7 @@
 
 page {
     font-size: 28rpx;
+    background-color: #eee;
 }
 
 .ellipsis {

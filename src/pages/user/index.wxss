@@ -1,0 +1,109 @@
+.user-container {
+    color: #888888;
+    font-size: 32rpx;
+}
+
+.botton-hover {
+    background-color: #dddddd;
+}
+
+.user-background {
+    width: 100%;
+    height: 500rpx;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.user-card {
+    margin: 380rpx auto 0;
+    width: 80%;
+    border-radius: 8rpx;
+    box-shadow: 0 2rpx 8rpx 0 #cccccc;
+    background-color: #ffffff;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    padding: 60rpx 20rpx;
+}
+
+.user-hint {
+    flex: 1;
+    text-align: center;
+}
+
+.user-avatar {
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+}
+
+.user-nickname {
+    margin-left: 30rpx;
+}
+
+.login-btn {
+    margin-top: 60rpx;
+}
+
+.menu {
+    margin: 60rpx auto 0;
+    width: 80%;
+    background-color: #ffffff;
+    border-radius: 8rpx;
+    overflow: hidden;
+}
+
+.menu-item-wrap {
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.mp-icon {
+    position: absolute;
+    right: 40rpx;
+    line-height: 120rpx;
+}
+
+.menu-item {
+    width: 100%;
+    line-height: 120rpx;
+    padding: 0 40rpx;
+}
+
+.menu-item-wrap>button.menu-item {
+    margin: 0;
+    width: 100%;
+}
+
+button.menu-item {
+    background: inherit;
+    padding: 0 40rpx;
+    font-weight: inherit;
+    font-size: inherit;
+    color: inherit;
+    text-align: left;
+    border-radius: 0;
+}
+
+button.menu-item:focus {
+    outline: 0;
+    border-radius: 0;
+}
+
+button.menu-item::after {
+    border: none;
+}
+
+.border-btm {
+    width: 200%;
+    height: 2rpx;
+    background-color: #cccccc;
+    margin-left: 40rpx;
+    margin-top: -2rpx;
+    transform: scale(0.5) translateX(-50%);
+}

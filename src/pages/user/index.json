@@ -1,0 +1,6 @@
+{
+    "navigationStyle": "custom",
+    "usingComponents": {
+        "mp-icon": "../../components/icon/icon"
+    }
+}
