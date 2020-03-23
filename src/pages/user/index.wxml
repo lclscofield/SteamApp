@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <view class="user-container">
-    <image class="user-background" src="../../imgs/user-background.jpg" />
+    <image class="user-background" mode="aspectFill" src="../../imgs/user-background.jpg" />
     <view class="user-card">
         <view class="user-info" wx:if="{{ login }}">
             <image class="user-avatar" src="{{ userInfo.avatarUrl }}" />
