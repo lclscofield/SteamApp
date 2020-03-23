@@ -39,6 +39,7 @@ Component({
     },
 
     methods: {
+        // 更新列表数据
         updateGameList() {
             const { page, showEnd } = this.data
             if (showEnd) return
@@ -49,6 +50,14 @@ Component({
                 })
             }
             this.triggerEvent('update')
+        },
+
+        // 跳转详情页
+        goDetail(e) {
+            const gId = e.currentTarget.id
+            wx.navigateTo({
+                url: '/pages/detail/index?gId=' + gId
+            })
         }
     }
 })

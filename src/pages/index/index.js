@@ -91,7 +91,7 @@ Page({
         let res = null
         // 根据当前类型获取对应数据
         console.log(type, page + 1)
-        res = await db.fetchGameListDiscount(type, page + 1)
+        res = await db.fetchGameList(type, page + 1)
 
         if (res) {
             if (res.length < 20) {

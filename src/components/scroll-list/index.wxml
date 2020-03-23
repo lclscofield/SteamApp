@@ -1,7 +1,7 @@
 <!-- 这是自定义组件的内部WXML结构 -->
 <scroll-view class="tab-content" enable-flex="{{true}}" scroll-with-animation="{{true}}" enable-back-to-top="{{true}}" scroll-y="{{true}}" scroll-anchoring="{{true}}" lower-threshold="300" bindscrolltolower="updateGameList">
     <view class="game-card-wrap" wx:for="{{gameListWrap}}" wx:for-item="gameList" wx:for-index="gameListIdx" wx:key="gameListIdx">
-        <view class="game-card" hover-class="hover-class" hover-start-time="100" wx:for="{{gameList}}" wx:for-item="game" wx:for-index="gameIdx" wx:key="gid">
+        <view class="game-card" hover-class="hover-class" hover-start-time="100" wx:for="{{gameList}}" wx:for-item="game" wx:for-index="gameIdx" wx:key="gId" id="{{ game.gId }}" bindtap="goDetail">
             <!-- left -->
             <image class="game-left game-img" lazy-load="true" src="{{ game.imgHeaderUrl }}"></image>
             <!-- left-bottom -->
