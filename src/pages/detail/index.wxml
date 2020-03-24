@@ -1,1 +1,37 @@
-<image mode="aspectFill" />
+<view class="detail">
+    <view class="media-current">
+        <video class="media-current-video" muted="true" enable-play-gesture="true" show-mute-btn="true" wx:if="{{ media[currentMediaIdx].type === 'video' }}" src="{{ media[currentMediaIdx].src }}" poster="{{ media[currentMediaIdx].poster }}" />
+        <image class="media-current-img" id="{{ media[currentMediaIdx].imgMaxUrl }}" wx:if="{{ media[currentMediaIdx].type === 'img' }}" src="{{ media[currentMediaIdx].src }}" bind:tap="preview" />
+    </view>
+    <scroll-view class="media-list" scroll-x="{{true}}">
+        <image class="media-list-item {{ index === currentMediaIdx ? 'active' : '' }}" mode="aspectFill" src="{{ item.poster }}" wx:for="{{ media }}" wx:key="index" id="{{ index }}" bind:tap="switchMedia"/>
+    </scroll-view>
+    <!-- 基本信息 -->
+    <view class="basic-info">
+        <text class="title" selectable="{{true}}">{{ detail.appName }}</text>
+        <text class="desc" selectable="{{true}}">{{ detail.desc }}</text>
+        <view class="tags">
+            <view class="tag" wx:for="{{ detail.tags }}" wx:for-item="tag" wx:key="tag">
+                {{ tag }}
+            </view>
+        </view>
+    </view>
+    <!-- 其他信息 -->
+    <view class="other-info">
+        <text class="other-info-item" selectable="{{true}}" wx:if="{{ detail.summaryReview.lately }}">
+            最近评测：{{ detail.summaryReview.lately.review }}
+        </text>
+        <text class="other-info-item" selectable="{{true}}" wx:if="{{ detail.summaryReview.all }}">
+            全部评测：{{ detail.summaryReview.all.review }}
+        </text>
+        <text class="other-info-item" selectable="{{true}}" wx:if="{{ detail.personData.devPerson }}">
+            开发商：{{ detail.personData.devPerson }}
+        </text>
+        <text class="other-info-item" selectable="{{true}}" wx:if="{{ detail.personData.pubPerson }}">
+            发行商：{{ detail.personData.pubPerson }}
+        </text>
+        <text class="other-info-item" selectable="{{true}}" wx:if="{{ detail.releaseDate }}">
+            发行日期：{{ detail.releaseDate }}
+        </text>
+    </view>
+</view>

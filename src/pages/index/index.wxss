@@ -1,8 +1,4 @@
 /**index.wxss**/
-page {
-    height: 100%;
-}
-
 .weui-tabs-bar__wrp {
     border-bottom: 2rpx solid #eee;
     padding-top: 18rpx;

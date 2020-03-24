@@ -4,6 +4,7 @@
 page {
     font-size: 28rpx;
     background-color: #eee;
+    color: #1b3b51;
 }
 
 .ellipsis {
