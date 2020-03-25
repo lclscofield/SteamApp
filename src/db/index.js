@@ -44,5 +44,19 @@ module.exports = {
 
     /**
      * 用户订阅状态更新
+     * @param {string} userId - userId
+     * @param {string} gameId - gameId
      */
+    async fetchUserSubscribe(userId, gameIds) {
+        const _ = db.command
+        const res = await db
+            .collection('users')
+            .doc(userId)
+            .update({
+                data: {
+                    subscribe: _.set(gameIds)
+                }
+            })
+        if (res && res.data) return true
+    }
 }

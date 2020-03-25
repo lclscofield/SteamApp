@@ -71,8 +71,9 @@ Page({
     },
 
     // 订阅
-    subscribeMessage() {
+    async subscribeMessage() {
         const userInfo = app.globalData.userInfo
+        const { detail, isSubscribe } = this.data
         // 提示去登录
         if (!userInfo) {
             this.setData({
@@ -84,17 +85,31 @@ Page({
             // 订阅成功后，保存数据
             wx.requestSubscribeMessage({
                 tmplIds: ['0kqDNlU7yT_zzvoiX_Q5-UTdfVgLEvovD0RUTBdpDmY'],
-                success: res => {
+                success: async res => {
                     console.log(res)
-                    this.setData({
-                        isSubscribe: true
-                    })
+                    const gameIds = userInfo.subscribe || []
+
+                    // 更新订阅状态，更新完成则变更状态
+                    gameIds.push(detail._id)
+                    const isSure = await db.fetchUserSubscribe(userInfo.openId, gameIds)
+                    isSure &&
+                        this.setData({
+                            isSubscribe: true
+                        })
                 }
             })
         } else {
-            this.setData({
-                isSubscribe: false
-            })
+            const gameIds = userInfo.subscribe || []
+            const idx = gameIds.indexOf(detail._id)
+            if (idx === -1) return
+
+            // 更新订阅状态，更新完成则变更状态
+            gameIds.splice(idx, 1)
+            const isSure = await db.fetchUserSubscribe(userInfo.openId, gameIds)
+            isSure &&
+                this.setData({
+                    isSubscribe: false
+                })
         }
     },
 
