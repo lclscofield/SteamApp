@@ -62,7 +62,7 @@ Page({
         const userInfo = app.globalData.userInfo
         if (userInfo && userInfo.subscribe) {
             const isSubscribe = userInfo.subscribe.some(item => {
-                return item === this.data.detail._id
+                return item.id === this.data.detail._id
             })
             this.setData({
                 isSubscribe
@@ -73,7 +73,7 @@ Page({
     // 订阅
     async subscribeMessage() {
         const userInfo = app.globalData.userInfo
-        const { detail, isSubscribe } = this.data
+        const { isSubscribe } = this.data
         // 提示去登录
         if (!userInfo) {
             this.setData({
@@ -87,31 +87,42 @@ Page({
                 tmplIds: ['0kqDNlU7yT_zzvoiX_Q5-UTdfVgLEvovD0RUTBdpDmY'],
                 success: async res => {
                     console.log(res)
-                    const gameIds = userInfo.subscribe || []
-
-                    // 更新订阅状态，更新完成则变更状态
-                    gameIds.push(detail._id)
-                    const isSure = await db.fetchUserSubscribe(userInfo.openId, gameIds, true)
-                    isSure &&
-                        this.setData({
-                            isSubscribe: true
-                        })
+                    await this.switchSubscribe(true)
                 }
             })
         } else {
             // 取消订阅
-            const gameIds = userInfo.subscribe || []
-            const idx = gameIds.indexOf(detail._id)
+            await this.switchSubscribe(false)
+        }
+    },
+
+    // 订阅状态变更
+    async switchSubscribe(bool) {
+        const userInfo = app.globalData.userInfo
+        const subscribe = userInfo.subscribe || []
+        const { detail } = this.data
+
+        // 更新订阅状态，更新完成则变更状态
+        if (bool) {
+            subscribe.push({
+                id: detail._id,
+                title: detail.appName
+            })
+        } else {
+            const idx = subscribe.findIndex(item => {
+                return item.id === detail._id
+            })
             if (idx === -1) return
 
             // 更新订阅状态，更新完成则变更状态
-            gameIds.splice(idx, 1)
-            const isSure = await db.fetchUserSubscribe(userInfo.openId, gameIds, false)
-            isSure &&
-                this.setData({
-                    isSubscribe: false
-                })
+            subscribe.splice(idx, 1)
         }
+
+        const isSure = await db.fetchUserSubscribe(userInfo.openId, subscribe, bool)
+        isSure &&
+            this.setData({
+                isSubscribe: bool
+            })
     },
 
     // 关闭 dialog

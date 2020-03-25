@@ -47,11 +47,11 @@ module.exports = {
 
     /**
      * 用户订阅状态更新
-     * @param {string} userId - userId
-     * @param {string} gameId - gameId
+     * @param {string} userId - 用户 openId
+     * @param {string} subscribe - 订阅列表
      * @param {boolean} bool - 订阅状态，true => 要订阅，false => 要取消
      */
-    async fetchUserSubscribe(userId, gameIds, bool) {
+    async fetchUserSubscribe(userId, subscribe, bool) {
         const _ = db.command
         const res = await db
             .collection('users')
@@ -60,14 +60,14 @@ module.exports = {
             })
             .update({
                 data: {
-                    subscribe: _.set(gameIds)
+                    subscribe: _.set(subscribe)
                 }
             })
         console.log(res)
         if (res && res.errMsg === 'collection.update:ok') {
-            app.globalData.userInfo.subscribe = gameIds
+            app.globalData.userInfo.subscribe = subscribe
             // 写入缓存
-            wx.setStorageSync('userInfo', app.globalData.userInfo)
+            // wx.setStorageSync('userInfo', app.globalData.userInfo)
             wx.showToast({
                 title: `${ bool ? '' : '取消' }订阅成功`,
                 icon: 'success',
