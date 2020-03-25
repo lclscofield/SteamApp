@@ -37,5 +37,15 @@ Page({
                 })
             }
         }
+    },
+
+    // 订阅
+    subscribeMessage() {
+        wx.requestSubscribeMessage({
+            tmplIds: ['0kqDNlU7yT_zzvoiX_Q5-UTdfVgLEvovD0RUTBdpDmY'],
+            success(res) {
+                console.log(res)
+            }
+        })
     }
 })

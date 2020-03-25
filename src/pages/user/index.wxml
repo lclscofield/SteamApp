@@ -11,6 +11,10 @@
         </view>
     </view>
     <view class="menu" wx:if="{{ login }}">
+        <view class="menu-item-wrap" hover-start-time="20" hover-stay-time="70" hover-class="botton-hover" bindtap="subscribeMessage">
+            <view class="menu-item">订阅</view>
+            <mp-icon class="mp-icon" type="field" icon="arrow" color="#cccccc" size="{{14}}"></mp-icon>
+        </view>
         <view class="border-btm"></view>
         <view class="menu-item-wrap" hover-start-time="20" hover-stay-time="70" hover-class="botton-hover">
             <button class="menu-item menu-feedback" open-type="feedback">反馈意见</button>
