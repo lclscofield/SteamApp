@@ -27,12 +27,12 @@ Page({
     async login(res) {
         const userInfo = res.detail.userInfo
         if (userInfo) {
-            const res = await api.login({ userInfo })
-            if (res && res.result) {
-                // 登录获取用户信息
-                app.globalData.userInfo = res.result
+            const fetchRes = await api.login({ userInfo })
+            // 登录获取用户信息
+            if (fetchRes) {
+                app.globalData.userInfo = fetchRes
                 this.setData({
-                    userInfo: res.result,
+                    userInfo: fetchRes,
                     login: true
                 })
             }

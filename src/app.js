@@ -20,10 +20,7 @@ App({
         // login
         const res = await api.login()
         console.log(res)
-        if (res && res.result) {
-            // 登录获取用户信息
-            this.globalData.userInfo = res.result
-        }
+        res && (this.globalData.userInfo = res)
 
         // 获取配置
         const db = require('./db/index')
