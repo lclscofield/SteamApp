@@ -1,7 +1,7 @@
 <view class="detail">
     <view class="media-current">
         <video class="media-current-video" muted="true" enable-play-gesture="true" show-mute-btn="true" wx:if="{{ media[currentMediaIdx].type === 'video' }}" src="{{ media[currentMediaIdx].src }}" poster="{{ media[currentMediaIdx].poster }}" />
-        <image class="media-current-img" id="{{ media[currentMediaIdx].imgMaxUrl }}" wx:if="{{ media[currentMediaIdx].type === 'img' }}" src="{{ media[currentMediaIdx].src }}" bind:tap="preview" />
+        <image class="media-current-img" wx:if="{{ media[currentMediaIdx].type === 'img' }}" src="{{ media[currentMediaIdx].src }}" bind:tap="preview" />
     </view>
     <scroll-view class="media-list" scroll-x="{{true}}">
         <image class="media-list-item {{ index === currentMediaIdx ? 'active' : '' }}" mode="aspectFill" src="{{ item.poster }}" wx:for="{{ media }}" wx:key="index" id="{{ index }}" bind:tap="switchMedia"/>

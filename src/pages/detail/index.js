@@ -1,10 +1,11 @@
 const db = require('../../db/index')
+const app = getApp()
 
 Page({
     data: {
         detail: {}, // 游戏详情
         currentMediaIdx: 0, // 当前媒体元素
-        media: []  // 媒体数据，包括图片和视频，视频在前
+        media: [] // 媒体数据，包括图片和视频，视频在前
     },
 
     async onLoad(query) {
@@ -28,13 +29,16 @@ Page({
         const { imgs, videos } = this.data.detail
         const media = []
 
-        videos.forEach(item => {
-            media.push({
-                type: 'video',
-                src: item.src,
-                poster: item.poster
+        const config = app.globalData.config
+        if (config.showVideo) {
+            videos.forEach(item => {
+                media.push({
+                    type: 'video',
+                    src: item.src,
+                    poster: item.poster
+                })
             })
-        })
+        }
         imgs.forEach(item => {
             media.push({
                 type: 'img',
@@ -50,7 +54,7 @@ Page({
     },
 
     // 切换当前 media
-    switchMedia (e) {
+    switchMedia(e) {
         console.log(e)
         const idx = e.currentTarget.id
         this.setData({
@@ -59,11 +63,18 @@ Page({
     },
 
     // 预览图片
-    preview (e) {
-        console.log(e)
-        const imgMaxUrl = e.currentTarget.id
+    preview() {
+        const { media, currentMediaIdx} = this.data
+        const mediaImg = media.filter(item => {
+            return item.type === 'img'
+        })
+        const urls = mediaImg.map(item => {
+            return item.src
+        })
+
         wx.previewImage({
-            urls: [imgMaxUrl]
+            urls: urls,
+            current: media[currentMediaIdx].src
         })
     }
 })

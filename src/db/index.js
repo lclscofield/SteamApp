@@ -23,11 +23,21 @@ module.exports = {
      * @param {string} gId - gId
      */
     async fetchGameDetail(gId) {
-        const res = await db.collection('details')
-        .where({
-            gId
-        }).get()
-        console.log(111, res)
+        const res = await db
+            .collection('details')
+            .where({
+                gId
+            })
+            .get()
+        if (!res || !res.data || !res.data[0]) return null
+        return res.data[0]
+    },
+
+    /**
+     * 获取配置
+     */
+    async fetchConfig() {
+        const res = await db.collection('config').get()
         if (!res || !res.data || !res.data[0]) return null
         return res.data[0]
     }
