@@ -34,11 +34,15 @@ module.exports = {
     },
 
     /**
-     * 获取配置
+     * 获取全局配置
      */
     async fetchConfig() {
         const res = await db.collection('config').get()
         if (!res || !res.data || !res.data[0]) return null
         return res.data[0]
-    }
+    },
+
+    /**
+     * 用户订阅状态更新
+     */
 }

@@ -5,6 +5,7 @@ module.exports = {
      */
     async login(param) {
         // 从缓存获取用户信息
+        // wx.removeStorageSync('userInfo')
         const userInfo = wx.getStorageSync('userInfo')
         if (userInfo) {
             return userInfo

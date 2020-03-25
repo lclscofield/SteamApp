@@ -4,11 +4,16 @@
         <image class="media-current-img" wx:if="{{ media[currentMediaIdx].type === 'img' }}" src="{{ media[currentMediaIdx].src }}" bind:tap="preview" />
     </view>
     <scroll-view class="media-list" scroll-x="{{true}}">
-        <image class="media-list-item {{ index === currentMediaIdx ? 'active' : '' }}" mode="aspectFill" src="{{ item.poster }}" wx:for="{{ media }}" wx:key="index" id="{{ index }}" bind:tap="switchMedia"/>
+        <image class="media-list-item {{ index === currentMediaIdx ? 'active' : '' }}" mode="aspectFill" src="{{ item.poster }}" wx:for="{{ media }}" wx:key="index" id="{{ index }}" bind:tap="switchMedia" />
     </scroll-view>
     <!-- 基本信息 -->
     <view class="basic-info">
-        <text class="title" selectable="{{true}}">{{ detail.appName }}</text>
+        <view class="title-wrap">
+            <text class="title" selectable="{{true}}">{{ detail.appName }}</text>
+            <view class="subscribe {{ isSubscribe ? 'active' : '' }}" bind:tap="subscribeMessage">
+                {{ isSubscribe ? '取消订阅' : '订阅' }}
+            </view>
+        </view>
         <text class="desc" selectable="{{true}}">{{ detail.desc }}</text>
         <view class="tags">
             <view class="tag" wx:for="{{ detail.tags }}" wx:for-item="tag" wx:key="tag">
@@ -33,5 +38,19 @@
         <text class="other-info-item" selectable="{{true}}" wx:if="{{ detail.releaseDate }}">
             发行日期：{{ detail.releaseDate }}
         </text>
+    </view>
+    <!-- dialog -->
+    <view class="fadeIn" wx:if="{{ showDialog }}">
+        <view class="weui-mask"></view>
+        <view class="weui-dialog">
+            <view class="weui-dialog__hd">
+                <strong class="weui-dialog__title">订阅</strong>
+            </view>
+            <view class="weui-dialog__bd">请先登录，才能使用订阅功能</view>
+            <view class="weui-dialog__ft">
+                <a class="weui-dialog__btn weui-dialog__btn_default" bind:tap="close">不了</a>
+                <a class="weui-dialog__btn weui-dialog__btn_primary" bind:tap="goUser">去登录</a>
+            </view>
+        </view>
     </view>
 </view>

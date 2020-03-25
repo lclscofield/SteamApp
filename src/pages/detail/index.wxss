@@ -53,8 +53,26 @@
     border-bottom: 1px solid #1b3b51;
 }
 
+.title-wrap {
+    position: relative;
+}
+
 .title {
+    display: inline-block;
+    width: 80%;
     font-size: 40rpx;
+}
+
+.subscribe {
+    position: absolute;
+    top: 10rpx;
+    right: 20rpx;
+    text-align: right;
+    color: #1aa36f;
+}
+
+.subscribe.active {
+    color: #a1a4a7;
 }
 
 .desc {
@@ -77,6 +95,7 @@
     color: #fff;
 }
 
+/* 其他信息 */
 .other-info {
     margin: 0 20rpx;
     padding: 20rpx 0;
