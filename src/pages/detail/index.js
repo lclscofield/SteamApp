@@ -91,7 +91,7 @@ Page({
 
                     // 更新订阅状态，更新完成则变更状态
                     gameIds.push(detail._id)
-                    const isSure = await db.fetchUserSubscribe(userInfo.openId, gameIds)
+                    const isSure = await db.fetchUserSubscribe(userInfo.openId, gameIds, true)
                     isSure &&
                         this.setData({
                             isSubscribe: true
@@ -99,13 +99,14 @@ Page({
                 }
             })
         } else {
+            // 取消订阅
             const gameIds = userInfo.subscribe || []
             const idx = gameIds.indexOf(detail._id)
             if (idx === -1) return
 
             // 更新订阅状态，更新完成则变更状态
             gameIds.splice(idx, 1)
-            const isSure = await db.fetchUserSubscribe(userInfo.openId, gameIds)
+            const isSure = await db.fetchUserSubscribe(userInfo.openId, gameIds, false)
             isSure &&
                 this.setData({
                     isSubscribe: false
