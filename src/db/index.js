@@ -50,30 +50,83 @@ module.exports = {
      * @param {string} userId - 用户 openId
      * @param {string} subscribe - 订阅列表
      * @param {boolean} bool - 订阅状态，true => 要订阅，false => 要取消
+     * @param {object} detail - 订阅游戏详情
      */
-    async fetchUserSubscribe(userId, subscribe, bool) {
+    async fetchUserSubscribe(userId, subscribe, bool, detail) {
         const _ = db.command
-        const res = await db
-            .collection('users')
-            .where({
-                openId: userId
-            })
-            .update({
-                data: {
-                    subscribe: _.set(subscribe)
+        try {
+            // 更新用户订阅记录
+            const res = await db
+                .collection('users')
+                .where({
+                    openId: userId
+                })
+                .update({
+                    data: {
+                        subscribe: _.set(subscribe)
+                    }
+                })
+            console.log('res', res)
+
+            // 向订阅数据库添加记录或更新状态
+            const resSend = await db
+                .collection('send')
+                .where({
+                    userId: userId,
+                    gameId: detail._id
+                })
+                .get()
+            let isSure = false
+            console.log('resSend', resSend)
+            if (resSend && resSend.data) {
+                if (resSend.data[0]) {
+                    // 有数据则更新
+                    const resUpdate = await db
+                        .collection('send')
+                        .where({
+                            userId: userId,
+                            gameId: detail._id
+                        })
+                        .update({
+                            data: {
+                                done: !bool // 判断是否已经订阅完成的字段，也可能是订阅取消
+                            }
+                        })
+                    console.log('resUpdate', resUpdate)
+                    if (resUpdate.errMsg === 'collection.update:ok') {
+                        isSure = true
+                    }
+                } else {
+                    // 无数据则添加
+                    const resAdd = await db.collection('send').add({
+                        data: {
+                            userId: userId,
+                            gameId: detail._id,
+                            title: detail.appName,
+                            done: !bool // 判断是否已经订阅完成的字段
+                        }
+                    })
+                    console.log('resAdd', resAdd)
+                    if (resAdd.errMsg === 'collection.add:ok') {
+                        isSure = true
+                    }
                 }
-            })
-        console.log(res)
-        if (res && res.errMsg === 'collection.update:ok') {
-            app.globalData.userInfo.subscribe = subscribe
-            // 写入缓存
-            // wx.setStorageSync('userInfo', app.globalData.userInfo)
-            wx.showToast({
-                title: `${ bool ? '' : '取消' }订阅成功`,
-                icon: 'success',
-                duration: 2000
-            })
-            return true
+            }
+
+            // 数据处理
+            if (res.errMsg === 'collection.update:ok' && isSure) {
+                app.globalData.userInfo.subscribe = subscribe
+                // 写入缓存
+                // wx.setStorageSync('userInfo', app.globalData.userInfo)
+                wx.showToast({
+                    title: `${bool ? '' : '取消'}订阅成功`,
+                    icon: 'success',
+                    duration: 2000
+                })
+                return true
+            }
+        } catch (err) {
+            console.log(err)
         }
     }
 }

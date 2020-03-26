@@ -74,6 +74,7 @@ Page({
     async subscribeMessage() {
         const userInfo = app.globalData.userInfo
         const { isSubscribe } = this.data
+        const tmplId = '0kqDNlU7yT_zzvoiX_Q5-UTdfVgLEvovD0RUTBdpDmY'
         // 提示去登录
         if (!userInfo) {
             this.setData({
@@ -84,10 +85,12 @@ Page({
         if (!isSubscribe) {
             // 订阅成功后，保存数据
             wx.requestSubscribeMessage({
-                tmplIds: ['0kqDNlU7yT_zzvoiX_Q5-UTdfVgLEvovD0RUTBdpDmY'],
+                tmplIds: [tmplId],
                 success: async res => {
                     console.log(res)
-                    await this.switchSubscribe(true)
+                    if (res[tmplId] === 'accept') {
+                        await this.switchSubscribe(true)
+                    }
                 }
             })
         } else {
@@ -118,7 +121,7 @@ Page({
             subscribe.splice(idx, 1)
         }
 
-        const isSure = await db.fetchUserSubscribe(userInfo.openId, subscribe, bool)
+        const isSure = await db.fetchUserSubscribe(userInfo.openId, subscribe, bool, detail)
         isSure &&
             this.setData({
                 isSubscribe: bool
