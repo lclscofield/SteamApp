@@ -4,7 +4,8 @@ App({
     //全局变量
     globalData: {
         userInfo: null,
-        config: {} // app 配置
+        config: {}, // app 配置
+        subscribeList: [] // 订阅列表
     },
     // 程序初始化
     async onLaunch() {
@@ -19,9 +20,13 @@ App({
         const api = require('./api/index')
         const db = require('./db/index')
 
-        // login
+        // 登录
         await api.login()
         console.log(this.globalData.userInfo)
+        // 获取订阅列表
+        if (this.globalData.userInfo) {
+            await db.fetchSubscribeList()
+        }
 
         // 获取配置
         const config = await db.fetchConfig()

@@ -1,6 +1,5 @@
 // 小程序端数据库操作
 const db = wx.cloud.database()
-
 // 获取应用实例
 const app = getApp()
 
@@ -46,8 +45,35 @@ module.exports = {
     },
 
     /**
+     * 获取订阅列表
+     */
+    async fetchSubscribeList() {
+        const { userInfo } = app.globalData
+        if (!userInfo) return
+
+        try {
+            const res = await db
+                .collection('subscribeList')
+                .where({
+                    _openid: userInfo._openid
+                })
+                .get()
+            console.log(res)
+            if (res.errMsg === 'collection.get:ok' && Array.isArray(res.data)) {
+                app.globalData.subscribeList = res.data
+            }
+        } catch (err) {
+            console.error(err)
+        }
+    },
+
+    /**
+     * 
+     */
+
+    /**
      * 用户订阅状态更新
-     * @param {string} userId - 用户 openId
+     * @param {string} userId - 用户 _openid
      * @param {string} subscribe - 订阅列表
      * @param {boolean} bool - 订阅状态，true => 要订阅，false => 要取消
      * @param {object} detail - 订阅游戏详情
