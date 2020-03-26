@@ -6,7 +6,7 @@ const app = getApp()
 Page({
     data: {
         userInfo: {},
-        login: true
+        login: false
     },
 
     // 页面加载
@@ -14,27 +14,31 @@ Page({
         const userInfo = app.globalData.userInfo
         if (userInfo) {
             this.setData({
-                userInfo
-            })
-        } else {
-            this.setData({
-                login: false
+                userInfo,
+                login: true
             })
         }
     },
 
     // 登录
     async login(res) {
+        wx.showLoading({
+            title: '登录中',
+            mask: true
+        })
         const userInfo = res.detail.userInfo
         if (userInfo) {
-            const fetchRes = await api.login({ userInfo })
+            this.setData({
+                loging: true
+            })
             // 登录获取用户信息
-            if (fetchRes) {
-                app.globalData.userInfo = fetchRes
+            const doc = await api.login(userInfo)
+            if (doc) {
                 this.setData({
-                    userInfo: fetchRes,
+                    userInfo: doc,
                     login: true
                 })
+                wx.hideLoading()
             }
         }
     }

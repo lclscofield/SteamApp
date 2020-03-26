@@ -1,5 +1,4 @@
 //app.js
-const api = require('./api/index')
 
 App({
     //全局变量
@@ -17,13 +16,14 @@ App({
             // env: 'steam-ze69m',
             traceUser: true
         })
+        const api = require('./api/index')
+        const db = require('./db/index')
+
         // login
-        const res = await api.login()
-        console.log(res)
-        res && (this.globalData.userInfo = res)
+        await api.login()
+        console.log(this.globalData.userInfo)
 
         // 获取配置
-        const db = require('./db/index')
         const config = await db.fetchConfig()
         this.globalData.config = config
     }
