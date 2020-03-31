@@ -59,10 +59,10 @@ Page({
 
     // 设置订阅状态
     subscribe() {
-        const userInfo = app.globalData.userInfo
-        if (userInfo && userInfo.subscribe) {
-            const isSubscribe = userInfo.subscribe.some(item => {
-                return item.id === this.data.detail._id
+        const { userInfo, subscribeList } = app.globalData
+        if (userInfo) {
+            const isSubscribe = subscribeList.some(item => {
+                return item.gameId === this.data.detail._id
             })
             this.setData({
                 isSubscribe
@@ -102,26 +102,10 @@ Page({
     // 订阅状态变更
     async switchSubscribe(bool) {
         const userInfo = app.globalData.userInfo
-        const subscribe = userInfo.subscribe || []
         const { detail } = this.data
 
         // 更新订阅状态，更新完成则变更状态
-        if (bool) {
-            subscribe.push({
-                id: detail._id,
-                title: detail.appName
-            })
-        } else {
-            const idx = subscribe.findIndex(item => {
-                return item.id === detail._id
-            })
-            if (idx === -1) return
-
-            // 更新订阅状态，更新完成则变更状态
-            subscribe.splice(idx, 1)
-        }
-
-        const isSure = await db.fetchUserSubscribe(userInfo.openId, subscribe, bool, detail)
+        const isSure = await db.fetchUpdateSubscribeList(userInfo.openId, bool, detail)
         isSure &&
             this.setData({
                 isSubscribe: bool
