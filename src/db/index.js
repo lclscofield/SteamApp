@@ -65,7 +65,7 @@ module.exports = {
 
         try {
             const res = await db
-                .collection('send')
+                .collection('sends')
                 .where({
                     _openid: userInfo._id
                 })
@@ -94,13 +94,13 @@ module.exports = {
                     gameId: detail._id,
                     title: detail.appName
                 }
-                await db.collection('send').add({ data })
+                await db.collection('sends').add({ data })
                 app.globalData.subscribeList.push(data)
             } else {
                 // 取消订阅
                 // 先查后删
                 const res = await db
-                    .collection('send')
+                    .collection('sends')
                     .where({
                         _openid: userId,
                         gameId: detail._id
@@ -108,7 +108,7 @@ module.exports = {
                     .get()
                 const doc = res.data[0]
                 await db
-                    .collection('send')
+                    .collection('sends')
                     .doc(doc._id)
                     .remove()
                 const idx = app.globalData.subscribeList.findIndex(item => {
